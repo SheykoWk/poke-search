@@ -4,8 +4,6 @@ import "./App.css";
 function App() {
     const [currentAnswer, setCurrentAnswer] = useState(null);
 
-    console.log(currentAnswer);
-
     return (
         <div className="App">
             <header className="App-header">
@@ -49,6 +47,15 @@ function App() {
                     onChange={() => setCurrentAnswer("d")}
                 />
                 <label htmlFor="d">Todas las anteriores</label>
+
+                <button onClick={() => {
+                  if(currentAnswer === 'd'){
+                    alert('Correcto felicidades, te has graduado de React')
+                  } else {
+                    alert('Nimodo mi chavo, nos vemos el siguiente modulo')
+                  }
+                }}>Validar Respuesta</button>
+
             </header>
         </div>
     );
