@@ -13,7 +13,7 @@ function App() {
     useEffect(() => {
         getAllPokemons()
           .then((response) => {
-            setPokemons(response.data.results)
+            //setPokemons(response.data.results)
           })
           .catch((err) => {
             console.error(err)
@@ -22,10 +22,10 @@ function App() {
     }, [])
 
     useEffect(() => {
-      if(isByType){
+      if(isByType && searchValue.length > 0){
         getPokemonByType(searchValue)
           .then((response) => {
-            console.log(response.data)
+            setPokemons(response.data.pokemon)
           })
           .catch((err) => {
             console.error(err)
@@ -34,7 +34,13 @@ function App() {
     }, [isByType, searchValue])
 
 
-    const list = pokemons.map((pokemon) => <Pokemon name={pokemon.name} key={pokemon.name} />)
+    const list = pokemons.map((pokemon) => {
+      if(isByType && searchValue.length > 0 ){
+        //pokemon.pokemon.name
+        return <Pokemon name={pokemon.pokemon.name} key={pokemon.pokemon.name} /> 
+      } 
+      return <Pokemon name={pokemon.name} key={pokemon.name} />
+    })
 
 
 
@@ -42,7 +48,7 @@ function App() {
         <div className="App">
             <header className="App-header">
               <Search handlerSearch={setSearchValue} handlerIsAType={setIsByType} />
-              { isByType ? `Esto es una busqueda por tipo: ${searchValue}` : `Esto es una busqueda por nombre: ${searchValue}`}     
+              { list }
             </header>
         </div>
     );
