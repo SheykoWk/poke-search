@@ -1,25 +1,21 @@
 import { useState } from "react"
 
 const Search = ({handlerSearch, handlerIsAType}) => {
+    const [inputValue, setInputValue] = useState('')
 
-    const [inputValue, setInputValue] = useState('');
-    const [isChecked, setIsChecked] = useState(false)    
-
-    const handlerIsChecked = (e) => {
-        console.log(e)
-        handlerIsAType(e.target.checked)
-        setIsChecked(e.target.checked)
-    }
+    
 
     return (
         <div>
-            { isChecked ? 'Esta Checkeado' : 'No esta checkeado' }
-            <input type='text' onChange={(e) => setInputValue(e.target.value) } />
+            <input type='text' onChange={(e) => {
+                console.log(`Esto seria una peticion:  https://pokeapi.co/api/v2/type/${e.target.value}`)
+                setInputValue(e.target.value)
+            } } />
 
-            <input type='checkbox' id="isByType" onChange={handlerIsChecked} />
+            <input type='checkbox' id="isByType" onChange={(e) => handlerIsAType(e.target.checked) } />
             <label htmlFor="isByType" >Search by type</label>
             
-            <button>Buscar</button>
+            <button onClick={() => console.log(`Esto seria una peticion:  https://pokeapi.co/api/v2/type/${inputValue}`)}>Buscar</button>
             
         </div>
     )
