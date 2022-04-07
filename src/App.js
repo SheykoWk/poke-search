@@ -10,6 +10,7 @@ function App() {
     useEffect(() => {
         getAllPokemons()
           .then((response) => {
+            
             console.log(response.data.results)
             setPokemons(response.data.results)
           })
@@ -20,9 +21,12 @@ function App() {
 
     const list = pokemons.map((pokemon) => <Pokemon name={pokemon.name} key={pokemon.name} />)
 
+
+
     return (
         <div className="App">
             <header className="App-header">
+
               <Search />
               { list }
             </header>
