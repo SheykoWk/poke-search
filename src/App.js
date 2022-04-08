@@ -4,6 +4,7 @@ import getAllPokemons from "./services/getAllPokemons";
 import Pokemon from './components/Pokemon';
 import Search from "./components/Search";
 import getPokemonByType from "./services/getPokemonByType";
+import SelectType from "./components/SelectType";
 
 function App() {
     const [pokemons, setPokemons] = useState([]);
@@ -33,6 +34,8 @@ function App() {
       }
     }, [isByType, searchValue])
 
+    
+
 
     const list = pokemons.map((pokemon) => {
       if(isByType && searchValue.length > 0 ){
@@ -47,6 +50,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
+              <SelectType />
               <Search handlerSearch={setSearchValue} handlerIsAType={setIsByType} />
               { list }
             </header>
