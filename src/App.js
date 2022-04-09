@@ -34,9 +34,6 @@ function App() {
       }
     }, [isByType, searchValue])
 
-    
-
-
     const list = pokemons.map((pokemon) => {
       if(isByType && searchValue.length > 0 ){
         //pokemon.pokemon.name
@@ -44,8 +41,6 @@ function App() {
       } 
       return <Pokemon name={pokemon.name} key={pokemon.name} />
     })
-
-
 
     return (
         <div className="App">
