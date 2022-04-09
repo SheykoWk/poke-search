@@ -7,23 +7,20 @@ import SelectType from "./components/SelectType";
 
 function App() {
     const [pokemons, setPokemons] = useState([]);
-    const [searchValue, setSearchValue] = useState("");
-    const [isByType, setIsByType] = useState(false);
     const [currentType, setCurrentType] = useState("normal");
 
     useEffect(() => {
-        getPokemonByType(searchValue)
+        getPokemonByType(currentType)
             .then((response) => {
                 setPokemons(response.data.pokemon);
             })
             .catch((err) => {
                 console.error(err);
             });
-    }, [searchValue]);
+    }, [currentType]);
 
-    const list = pokemons.map((pokemon) => (
-        <Pokemon name={pokemon.pokemon.name} key={pokemon.pokemon.name} />
-    ));
+    
+    const list = pokemons.map((pokemon) => <Pokemon name={pokemon.pokemon.name} key={pokemon.pokemon.name} />);
 
     return (
         <div className="App">
@@ -31,8 +28,7 @@ function App() {
                 <SelectType handlerOnSelect={setCurrentType} />
                 {currentType}
                 <Search
-                    handlerSearch={setSearchValue}
-                    handlerIsAType={setIsByType}
+                    handlerSearch={setCurrentType}
                 />
                 {list}
             </header>
