@@ -1,53 +1,40 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import getAllPokemons from "./services/getAllPokemons";
-import Pokemon from './components/Pokemon';
+import Pokemon from "./components/Pokemon";
 import Search from "./components/Search";
 import getPokemonByType from "./services/getPokemonByType";
 import SelectType from "./components/SelectType";
 
 function App() {
     const [pokemons, setPokemons] = useState([]);
-    const [searchValue, setSearchValue] = useState('')
-    const [isByType, setIsByType] = useState(false)
+    const [searchValue, setSearchValue] = useState("");
+    const [isByType, setIsByType] = useState(false);
+    const [currentType, setCurrentType] = useState("normal");
 
     useEffect(() => {
-        getAllPokemons()
-          .then((response) => {
-            //setPokemons(response.data.results)
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-
-    }, [])
-
-    useEffect(() => {
-      if(isByType && searchValue.length > 0){
         getPokemonByType(searchValue)
-          .then((response) => {
-            setPokemons(response.data.pokemon)
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
-    }, [isByType, searchValue])
+            .then((response) => {
+                setPokemons(response.data.pokemon);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [searchValue]);
 
-    const list = pokemons.map((pokemon) => {
-      if(isByType && searchValue.length > 0 ){
-        //pokemon.pokemon.name
-        return <Pokemon name={pokemon.pokemon.name} key={pokemon.pokemon.name} /> 
-      } 
-      return <Pokemon name={pokemon.name} key={pokemon.name} />
-    })
+    const list = pokemons.map((pokemon) => (
+        <Pokemon name={pokemon.pokemon.name} key={pokemon.pokemon.name} />
+    ));
 
     return (
         <div className="App">
             <header className="App-header">
-              <SelectType />
-              <Search handlerSearch={setSearchValue} handlerIsAType={setIsByType} />
-              { list }
+                <SelectType handlerOnSelect={setCurrentType} />
+                {currentType}
+                <Search
+                    handlerSearch={setSearchValue}
+                    handlerIsAType={setIsByType}
+                />
+                {list}
             </header>
         </div>
     );
